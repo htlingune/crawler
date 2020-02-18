@@ -37,3 +37,4 @@ for t in catergory:
             with open(path+'/%s' % (title) + '.json', 'w', encoding='utf8') as f:
                 json.dump(output, f)
             time.sleep(1)
+   session.close()
