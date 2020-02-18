@@ -35,3 +35,4 @@ for i in range(1,int(finalpage_number)):
         with open(path % (title) + '.json', 'w', encoding='utf8') as f:
             json.dump(output, f)
         time.sleep(1)
+session.close()
