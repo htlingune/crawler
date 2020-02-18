@@ -15,4 +15,6 @@ ltn_securities: https://ec.ltn.com.tw/list/securities
 
 ltn_weeklybiz_investment: https://ec.ltn.com.tw/list/weeklybiz and https://ec.ltn.com.tw/list/investment
 
+ltn_RSS :using RSS provided by ltn to crawl the news
+
 one can load the crawled json-file with the fileload.py
