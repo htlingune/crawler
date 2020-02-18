@@ -10,4 +10,4 @@ ltn_strategy: https://ec.ltn.com.tw/list/strategy
 ltn_securities: https://ec.ltn.com.tw/list/securities
 ltn_weeklybiz_investment: https://ec.ltn.com.tw/list/weeklybiz and https://ec.ltn.com.tw/list/investment
 
-one can load the json-file with the fileload.py
+one can load the crawled json-file with the fileload.py
