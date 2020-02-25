@@ -3,7 +3,7 @@ import os
 import json
 import time
 import datetime
-year = 
+year = int
 path = r'./cnyesnewshistory'+r'/'+str(year)+r'/%s'
 if not os.path.exists(r'./cnyesnewshistory'+r'/'+str(year)):
     os.mkdir(r'./cnyesnewshistory'+r'/'+str(year))
