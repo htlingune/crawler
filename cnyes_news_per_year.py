@@ -25,7 +25,7 @@ for i in range(1,12):
         response_news = session.get(url_news_page, headers = headers)
         news_page_json = response_news.json()
         data_perpage = len(news_page_json['items']['data'])
-        for n in range(data_perpage+1):
+        for n in range(data_perpage):
             title = str(news_page_json['items']['data'][n]['title']).replace('<',' ').replace('>',' ').replace('/','').replace('＃','').replace('?','').replace('*','_').replace('\"','_').replace(':','_').replace('\n','_')
             if not os.path.exists(path %(title)):
                 article_id = str(news_page_json['items']['data'][n]['newsId'])
