@@ -3,11 +3,12 @@ import os
 import json
 import time
 import datetime
-path =r'./cnyesnewshistory/%s'
-if not os.path.exists(r'./cnyesnewshistory'):
-    os.mkdir(r'./cnyesnewshistory')
+year = 2015
+path = r'./cnyesnewshistory'+r'/'+str(year)+r'/%s'
+if not os.path.exists(r'./cnyesnewshistory'+r'/'+str(year)):
+    os.mkdir(r'./cnyesnewshistory'+r'/'+str(year))
 headers={'user-agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.106 Safari/537.36'}
-year= 2014
+
 for i in range(1,12):
     starttime = int(datetime.datetime(year, i, 1).timestamp())
     endtime = int(datetime.datetime(year, i+1, 1).timestamp())
@@ -25,17 +26,17 @@ for i in range(1,12):
         news_page_json = response_news.json()
         data_perpage = len(news_page_json['items']['data'])
         for n in range(data_perpage):
-            title = str(news_page_json['items']['data'][n]['title']).replace('<',' ').replace('>',' ').replace('/','').replace('＃','').replace('?','')
-            article_id = str(news_page_json['items']['data'][n]['newsId'])
-            content_url = 'https://news.cnyes.com/api/v6/news/' + article_id
-            date = time.ctime(news_page_json['items']['data'][n]['publishAt'])
-            content_response = session.get(content_url, headers = headers)
-            content_json = content_response.json()
-            content = content_json['items']['content']
-            tag = content_json['items']['keywords']
-            href = 'https://news.cnyes.com/news/id/' + article_id
-            output = {'date':date,'title':title,'content':content,'href':href,'tag':tag}
-            session.close()
+            title = str(news_page_json['items']['data'][n]['title']).replace('<',' ').replace('>',' ').replace('/','').replace('＃','').replace('?','').replace('*','_').replace('\"','_')
             if not os.path.exists(path %(title)):
+                article_id = str(news_page_json['items']['data'][n]['newsId'])
+                content_url = 'https://news.cnyes.com/api/v6/news/' + article_id
+                date = time.ctime(news_page_json['items']['data'][n]['publishAt'])
+                content_response = session.get(content_url, headers = headers)
+                content_json = content_response.json()
+                content = content_json['items']['content']
+                tag = content_json['items']['keywords']
+                href = 'https://news.cnyes.com/news/id/' + article_id
+                output = {'date':date,'title':title,'content':content,'href':href,'tag':tag}
+                session.close()
                 with open(path %(title) + '.json', 'w', encoding='utf8') as f:
                     json.dump(output,f)
