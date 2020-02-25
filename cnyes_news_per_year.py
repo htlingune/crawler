@@ -26,7 +26,7 @@ for i in range(1,12):
         news_page_json = response_news.json()
         data_perpage = len(news_page_json['items']['data'])
         for n in range(data_perpage):
-            title = str(news_page_json['items']['data'][n]['title']).replace('<',' ').replace('>',' ').replace('/','').replace('＃','').replace('?','').replace('*','_').replace('\"','_')
+            title = str(news_page_json['items']['data'][n]['title']).replace('<',' ').replace('>',' ').replace('/','').replace('＃','').replace('?','').replace('*','_').replace('\"','_').replace(':','_')
             if not os.path.exists(path %(title)):
                 article_id = str(news_page_json['items']['data'][n]['newsId'])
                 content_url = 'https://news.cnyes.com/api/v6/news/' + article_id
