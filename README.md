@@ -3,7 +3,7 @@ the crawler for various sites that contain the news related to taiwanese stock m
 crawl the news content from various sites and store as json per news, in which the data contain :(date, title, content, href, clicks, tag)
 for the details which are not available ,fill the value as 'NA'
 
-starting(index) site:
+the reference site:
 
 cnyes_news_hightlight: https://news.cnyes.com/news/cat/headline
 
