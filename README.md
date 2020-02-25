@@ -19,4 +19,4 @@ ltn_weeklybiz: https://ec.ltn.com.tw/list/weeklybiz
 
 ltn_RSS :using RSS provided by ltn to crawl the news per days
 
-one can load the crawled json-file with the fileload.py
+one can load the crawled json-file with fileload.py
