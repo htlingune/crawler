@@ -13,6 +13,8 @@ ltn_strategy: https://ec.ltn.com.tw/list/strategy
 
 ltn_securities: https://ec.ltn.com.tw/list/securities
 
+ltn_investment.py: https://ec.ltn.com.tw/list/investment
+
 ltn_all: https://ec.ltn.com.tw/list/strategy, https://ec.ltn.com.tw/list/securities and https://ec.ltn.com.tw/list/investment
 
 ltn_weeklybiz: https://ec.ltn.com.tw/list/weeklybiz
