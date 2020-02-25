@@ -3,7 +3,7 @@ import os
 import json
 import time
 import datetime
-year = 2015
+year = 
 path = r'./cnyesnewshistory'+r'/'+str(year)+r'/%s'
 if not os.path.exists(r'./cnyesnewshistory'+r'/'+str(year)):
     os.mkdir(r'./cnyesnewshistory'+r'/'+str(year))
@@ -19,14 +19,14 @@ for i in range(1,12):
     index_json = response.json()
     lastpage = int(index_json['items']['last_page'])
     session.close()
-    for l in range(1,lastpage):
+    for l in range(1,lastpage+1):
         url_news_page = 'https://news.cnyes.com/api/v3/news/category/tw_stock?startAt=%s&endAt=%s&page=%d' % (
         timerange[0], timerange[1], l)
         response_news = session.get(url_news_page, headers = headers)
         news_page_json = response_news.json()
         data_perpage = len(news_page_json['items']['data'])
-        for n in range(data_perpage):
-            title = str(news_page_json['items']['data'][n]['title']).replace('<',' ').replace('>',' ').replace('/','').replace('＃','').replace('?','').replace('*','_').replace('\"','_').replace(':','_')
+        for n in range(data_perpage+1):
+            title = str(news_page_json['items']['data'][n]['title']).replace('<',' ').replace('>',' ').replace('/','').replace('＃','').replace('?','').replace('*','_').replace('\"','_').replace(':','_').replace('\n','_')
             if not os.path.exists(path %(title)):
                 article_id = str(news_page_json['items']['data'][n]['newsId'])
                 content_url = 'https://news.cnyes.com/api/v6/news/' + article_id

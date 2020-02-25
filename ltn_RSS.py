@@ -13,7 +13,7 @@ session = requests.session()
 response = session.get(rss, headers = headers)
 soup = BeautifulSoup(response.text, 'html.parser')
 session.close()
-for n in range(len(soup.select('item'))):
+for n in range(len(soup.select('item'))+1):
     title = soup.select('item')[n].title.text.replace('/','_').replace('<','_').replace('>','_').replace('/','_').replace('＃','_').replace('?','_').replace("\r",'_')
     date = soup.select('item')[n].pubdate.text
     clicks = "NA"
