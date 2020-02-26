@@ -17,7 +17,7 @@ finalpage_number = re.search(r"\d+",finalpage)[0]
 session.close()
 for i in range(1,int(finalpage_number)+1):
     try:
-        url_indexed_list = 'https://ec.ltn.com.tw/list/investment/' + str(i)
+        url_indexed_list = 'https://ec.ltn.com.tw/list/securities/' + str(i)
         response_list = session.get(url_indexed_list, headers=headers)
         soup = BeautifulSoup(response_list.text, 'html.parser')
         for t in range(0, 3):
