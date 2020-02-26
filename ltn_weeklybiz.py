@@ -49,8 +49,8 @@ while int((ref_date + timedelta(days=7)).strftime('%Y%m%d')) <= int(today.strfti
         response_list = session.get(url_indexed_list, headers=headers)
         soup = BeautifulSoup(response_list.text, 'html.parser')
         for k in range(len(soup.select('div[data-desc="文章列表"] a[class="boxText"] div[class="tit"] p'))):
-            href = soup.select('div[data-desc="文章列表"] a[class="boxText"]')[k]['href']
             title = soup.select('div[data-desc="文章列表"] a[class="boxText"] div[class="tit"] p')[k].text.replace('/','_').replace('<', ' ').replace('>', ' ').replace('/', '').replace('＃', '').replace('?', '').replace("\r", '_').replace('\\','_').replace('\n','_')
+            href = soup.select('div[data-desc="文章列表"] a[class="boxText"]')[k]['href']
             date = soup.select('div[data-desc="文章列表"] a[class="boxText"] div[class="tit"] span')[k].text
             clicks = "NA"
             tag = "NA"
@@ -109,8 +109,8 @@ while int((ref_date + timedelta(days=7)).strftime('%Y%m%d')) <= int(today.strfti
                 with open(path % (title) + '.json', 'w', encoding='utf8') as f:
                     json.dump(output, f)
             for k in range(len(soup.select('div[data-desc="文章列表"] a[class="boxText"] div[class="tit"] p'))):
-                href = soup.select('div[data-desc="文章列表"] a[class="boxText"]')[k]['href']
                 title = soup.select('div[data-desc="文章列表"] a[class="boxText"] div[class="tit"] p')[k].text.replace('/','_').replace('<', ' ').replace('>', ' ').replace('/', '').replace('＃', '').replace('?', '').replace("\r", '_').replace('\\','_').replace('\n','_')
+                href = soup.select('div[data-desc="文章列表"] a[class="boxText"]')[k]['href']
                 date = soup.select('div[data-desc="文章列表"] a[class="boxText"] div[class="tit"] span')[k].text
                 clicks = "NA"
                 tag = "NA"

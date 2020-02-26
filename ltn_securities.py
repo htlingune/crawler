@@ -22,6 +22,8 @@ for i in range(1,int(finalpage_number)+1):
         soup = BeautifulSoup(response_list.text, 'html.parser')
         for t in range(0, 3):
             title = soup.select('div[class="listphoto"] a[class]')[t].text.replace('/', '_').replace('<', ' ').replace('>', ' ').replace('/', '').replace('＃', '').replace('?', '').replace("\r", '_').replace('\\','_').replace('\n', '_')
+            if os.path.exists(path % (title) + '.json'):
+            	break
             href = soup.select('div[class="listphoto"] a')[t]['href']
             clicks = "NA"
             tag = "NA"
@@ -42,8 +44,10 @@ for i in range(1,int(finalpage_number)+1):
     response_list = session.get(url_indexed_list, headers=headers)
     soup = BeautifulSoup(response_list.text, 'html.parser')
     for k in range(len(soup.select('div[data-desc="文章列表"] a[class="boxText"] div[class="tit"] p'))):
-        href = soup.select('div[data-desc="文章列表"] a[class="boxText"]')[k]['href']
         title = soup.select('div[data-desc="文章列表"] a[class="boxText"] div[class="tit"] p')[k].text.replace('/','_').replace('<',' ').replace('>',' ').replace('/','').replace('＃','').replace('?','').replace("\r",'_')
+        if os.path.exists(path % (title) + '.json'):
+        	break
+        href = soup.select('div[data-desc="文章列表"] a[class="boxText"]')[k]['href']
         date = soup.select('div[data-desc="文章列表"] a[class="boxText"] div[class="tit"] span')[k].text
         clicks = "NA"
         tag = "NA"
