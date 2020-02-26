@@ -7,7 +7,7 @@ import time
 headers={'user-agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.106 Safari/537.36'}
 catergory = ['investment','securities','strategy']
 for cat in catergory:
-    path = r'./ltn_%s' % (t)
+    path = r'./ltn_%s' % (cat)
     if not os.path.exists(path):
         os.mkdir(path)
     url_list = 'https://ec.ltn.com.tw/list/%s' % (cat)
