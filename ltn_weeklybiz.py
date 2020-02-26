@@ -90,6 +90,7 @@ while int((ref_date + timedelta(days=7)).strftime('%Y%m%d')) <= int(today.strfti
         soup = BeautifulSoup(response_list.text, 'html.parser')
         for i in range(1, int(finalpage_number)+1):
             url_indexed_list = 'https://ec.ltn.com.tw/list/weeklybiz/' + '/'+ref_date.strftime('%Y%m%d') +'/'+ str(i)
+            print('currently in page ' + str(i))
             response_list = session.get(url_indexed_list, headers=headers)
             soup = BeautifulSoup(response_list.text, 'html.parser')
             for t in range(0, 3):
