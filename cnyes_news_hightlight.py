@@ -13,6 +13,8 @@ soup = BeautifulSoup(response.text, 'html.parser')
 path =r'./cnyesnewstoday/%s'
 for n in range(len(soup.select('a[class="_1Zdp"]'))):
     title = soup.select('a[class="_1Zdp"]')[n]['title']
+    if os.path.exists(path %(title) + '.json'):
+        break
     article_id = soup.select('a[class="_1Zdp"]')[n]['href']
     id = article_id.split('/')[-1]
     date = soup.select('a[class="_1Zdp"]')[n].time['datetime']
