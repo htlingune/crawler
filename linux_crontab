@@ -1,0 +1,11 @@
+#check 
+crontab -l
+#edit
+sudo vim /etc/crontab
+#content
+0 9,21 * * * python cnyes_news_hightlight.py
+0 9,21 * * * python ~/ltn_strategy.py
+0 9,21 * * * python ~/ltn_securities.py
+0 9,21 * * * python ~/ltn_investment.py
+0 9,21 * * * python ~/ltn_weeklybiz_oneweek.py
+0 9,21 * * * python ~/ltn_RSS.py
