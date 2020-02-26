@@ -15,7 +15,10 @@ soup_list = BeautifulSoup(response_head.text, 'html.parser')
 finalpage = soup_list.select('div[class="pagination boxTitle"]  a[data-desc="最後一頁"]')[0]['href']
 finalpage_number = re.search(r"\d+",finalpage)[0]
 session.close()
+breaktoken = 0 
 for i in range(1,int(finalpage_number)+1):
+    if breaktoken != 0:
+        break
     try:
         url_indexed_list = 'https://ec.ltn.com.tw/list/strategy/' + str(i)
         response_list = session.get(url_indexed_list, headers=headers)
@@ -46,6 +49,7 @@ for i in range(1,int(finalpage_number)+1):
     for k in range(len(soup.select('div[data-desc="文章列表"] a[class="boxText"] div[class="tit"] p'))):
         title = soup.select('div[data-desc="文章列表"] a[class="boxText"] div[class="tit"] p')[k].text.replace('/','_').replace('<',' ').replace('>',' ').replace('/','').replace('＃','').replace('?','').replace("\r",'_')
         if os.path.exists(path % (title) + '.json'):
+            breaktoken += 1
             break
         href = soup.select('div[data-desc="文章列表"] a[class="boxText"]')[k]['href']
         date = soup.select('div[data-desc="文章列表"] a[class="boxText"] div[class="tit"] span')[k].text
