@@ -1,11 +1,15 @@
 #check 
 crontab -l
 #edit
-sudo vim /etc/crontab
+crontab -e
 #content
-0 9,21 * * * python cnyes_news_hightlight.py
-0 9,21 * * * python ~/ltn_strategy.py
-0 9,21 * * * python ~/ltn_securities.py
-0 9,21 * * * python ~/ltn_investment.py
-0 9,21 * * * python ~/ltn_weeklybiz_oneweek.py
-0 9,21 * * * python ~/ltn_RSS.py
+0 9,12,15,18,21 * * * /home/user/crontab.sh
+0 15 * * 3 /home/user/crontab_weekly.sh
+#crontab script
+python /home/user/cnyes_news_hightlight.py
+python /home/user/ltn_strategy.py
+python /home/user/ltn_securities.py
+python /home/user/ltn_investment.py
+#crontab_weekly script
+python /home/user/ltn_investment.pyltn_RSS.py
+
