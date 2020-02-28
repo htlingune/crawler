@@ -1,21 +1,24 @@
-#check 
+#check# 
 crontab -l
-#edit
+
+#edit#
 crontab -e
-#content
-0 9,12,15,18,21 * * * /home/user/crontab.sh
-0 15 * * 3 /home/user/crontab_weekly.sh
-#crontab script
-'''
-#!/user/bin/env python
+
+#content#
+0 9,12,15,18,21 * * * sh /home/user/crontab.sh
+0 15 * * 3 sh /home/user/crontab_weekly.sh
+
+#crontab script#
+#!/bin/bash
 # -*- coding: UTF-8 -*-
-PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin
-export PATH
 python3 /home/user/cnyes_news_hightlight.py
 python3 /home/user/ltn_strategy.py
 python3 /home/user/ltn_securities.py
 python3 /home/user/ltn_investment.py
-'''
-#crontab_weekly script
+
+
+#crontab_weekly script#
+#!/bin/bash
+# -*- coding: UTF-8 -*-
 python /home/user/ltn_investment.pyltn_RSS.py
 
