@@ -6,10 +6,16 @@ crontab -e
 0 9,12,15,18,21 * * * /home/user/crontab.sh
 0 15 * * 3 /home/user/crontab_weekly.sh
 #crontab script
-python /home/user/cnyes_news_hightlight.py
-python /home/user/ltn_strategy.py
-python /home/user/ltn_securities.py
-python /home/user/ltn_investment.py
+'''
+#!/user/bin/env python
+# -*- coding: UTF-8 -*-
+PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin
+export PATH
+python3 /home/user/cnyes_news_hightlight.py
+python3 /home/user/ltn_strategy.py
+python3 /home/user/ltn_securities.py
+python3 /home/user/ltn_investment.py
+'''
 #crontab_weekly script
 python /home/user/ltn_investment.pyltn_RSS.py
 
