@@ -3,6 +3,7 @@ import os
 import json
 import time
 import datetime
+import re
 year = int
 path = r'./cnyesnewshistory'+r'/'+str(year)+r'/%s'
 if not os.path.exists(r'./cnyesnewshistory'+r'/'+str(year)):
@@ -34,6 +35,15 @@ for i in range(1,12):
                 content_response = session.get(content_url, headers = headers)
                 content_json = content_response.json()
                 content = content_json['items']['content']
+				if re.search(r'(<a.+?a>)', content) != None:
+                    content = re.sub(r"(\(<a.+?a>\))", '', content, count=0, flags=re.IGNORECASE)
+                if re.search(r'(&l.+?gt;)', content) != None:
+                    content = re.sub(r'(&l.+?gt;)', '', content, count=0)
+                if re.search(r'(&a.+?sp;)', content) != None:
+                    content = re.sub(r'(&a.+?sp;)', '', content, count=0)
+                if re.search(r'(\n)', content) != None:
+                    content = content.replace('\r', '')
+                    content = content.replace('\n', '')
                 tag = content_json['items']['keywords']
                 href = 'https://news.cnyes.com/news/id/' + article_id
                 output = {'date':date,'title':title,'content':content,'href':href,'tag':tag}
