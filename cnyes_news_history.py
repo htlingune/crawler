@@ -35,7 +35,7 @@ for i in range(1,12):
                 content_response = session.get(content_url, headers = headers)
                 content_json = content_response.json()
                 content = content_json['items']['content']
-				if re.search(r'(<a.+?a>)', content) != None:
+		if re.search(r'(<a.+?a>)', content) != None:
                     content = re.sub(r"(\(<a.+?a>\))", '', content, count=0, flags=re.IGNORECASE)
                 if re.search(r'(&l.+?gt;)', content) != None:
                     content = re.sub(r'(&l.+?gt;)', '', content, count=0)
