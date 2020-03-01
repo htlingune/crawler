@@ -12,12 +12,13 @@ for file in files:
                 content = dic['content']
                 if re.search(r'(<a.+?a>)', content) != None:
                     content = re.sub(r"(\(<a.+?a>\))", '', content, count=0, flags=re.IGNORECASE)
-                if re.search(r'(\n)', content) != None:
-                    content = re.sub(r'(\n)', '', content, count=0)
                 if re.search(r'(&l.+?gt;)', content) != None:
                     content = re.sub(r'(&l.+?gt;)', '', content, count=0)
                 if re.search(r'(&a.+?sp;)', content) != None:
                     content = re.sub(r'(&a.+?sp;)', '', content, count=0)
+                if re.search(r'(\n)', content) != None:
+                    content = content.replace('\r', '')
+                    content = content.replace('\n', '')
                 dic['content'] = content
         with open(path+'%s'% (file), 'w', encoding='utf-8') as f:
             json.dump(dic, f)
