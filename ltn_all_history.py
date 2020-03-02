@@ -55,6 +55,7 @@ for cat in catergory:
             for j in content_soup.select('p'):
                 if len(j.text) >2:
                     content_text += j.text
+            content_text = content_text.split('\n')[0]
             output = {'date': date, 'title': title, 'content': content_text, 'href': href, 'tag': tag, 'clicks': clicks}
             with open(path+'/%s' % (title) + '.json', 'w', encoding='utf8') as f:
                 json.dump(output, f)
