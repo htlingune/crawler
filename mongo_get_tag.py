@@ -6,11 +6,14 @@ tagjson = db.news.find({},{'_id':0,'tag':1})
 tagset = set()
 querynum = tagjson.count()
 print(f'this query contain {querynum} data')
-for tags in tagjson :
-    tag = tags['tag']
-    if type(tag) == str :
-        tagset.add(tag)
-    if type(tag) == list :
-        for i in range(len(tag)):
-            tagset.add(tag[i])
+for tags in tagjson:
+    try:
+        tag = tags['tag']
+        if type(tag) == str:
+            tagset.add(tag)
+        if type(tag) == list:
+            for i in range(len(tag)):
+                tagset.add(tag[i])
+    except Exception as e:
+        print(e.args[0])
 print(tagset)
