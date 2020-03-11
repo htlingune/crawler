@@ -6,8 +6,6 @@ import re
 import time
 from dateutil.relativedelta import relativedelta, MO
 from datetime import date
-headers={'user-agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.106 Safari/537.36'}
-path =r'./ltn_weeklybiz/%s'
 
 if not os.path.exists(r'./ltn_weeklybiz'):
     os.mkdir(r'./ltn_weeklybiz')
@@ -25,7 +23,7 @@ def req(url,headers):
     soup = BeautifulSoup(response.text, 'html.parser')
     return soup
 
-def fine_final(url,headers):
+def find_final(url,headers):
     soup = req(url, headers)
     finalpage = soup.select('div[class="pagination boxTitle"]  a[data-desc="最後一頁"]')[0]['href']
     finalpage_number = int(re.findall('\d+', finalpage)[1])
@@ -64,10 +62,12 @@ def content(soup,n):
 def file_save(path,title):
     with open(path % (title) + '.json', 'w', encoding='utf8') as f:
         json.dump(output, f)
-
+		
+headers={'user-agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.106 Safari/537.36'}
+path =r'./ltn_weeklybiz/%s'
 monday = get_monday()
 try:
-    finalpage_number = fine_final(url_indexed_list,headers)
+    finalpage_number = find_final(url_indexed_list,headers)
     session.close()
 except:
     print('only 1 page')
