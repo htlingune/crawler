@@ -51,7 +51,7 @@ def file_save(path, title, output):
         json.dump(output, f)
 
 def get_mulitcatergory(cat, headers):
-    print(f'thread:{cat}')
+    print(f'thread:{cat} is processing')
     path = r'./ltn_%s' % (cat)
     if not os.path.exists(r'./ltn_%s' %(cat)):
         os.mkdir(r'./ltn_%s' %(cat))
