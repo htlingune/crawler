@@ -59,7 +59,7 @@ def content(soup,n):
     output = {'date': date, 'title': title, 'content': content_text, 'href': href, 'tag': tag, 'clicks': clicks}
     return title, output
 
-def file_save(path,title):
+def file_save(path, title, output):
     with open(path % (title) + '.json', 'w', encoding='utf8') as f:
         json.dump(output, f)
 		
@@ -77,20 +77,20 @@ if finalpage_number == 0:
         soup = req(url_indexed_list,headers)
         for t in range(0, 3):
             title, output = content_header(soup,t)
-            file_save(path,title)
+            file_save(path, title, output)
     except:
         print('there are no news on the header')
     soup = req(url_indexed_list, headers)
     for k in range(len(soup.select('div[data-desc="文章列表"] a[class="boxText"] div[class="tit"] p'))):
         title, output = content(soup,k)
-        file_save(path,title)
+        file_save(path, title, output)
         time.sleep(1)
 else:
     try:
         soup = req(url_indexed_list,headers)
         for t in range(0, 3):
             title, output = content_header(soup, t)
-            file_save(path,title)
+            file_save(path, title, output)
     except:
         print('there are no news on the header')
     soup = req(url_indexed_list, headers)
@@ -101,10 +101,10 @@ else:
         try:
             for t in range(0, 3):
                 title, output = content_header(soup_main, t)
-                file_save(path, title)
+                file_save(path, title, output)
         except:
             print('there are no news on the header')
         for k in range(len(soup_main.select('div[data-desc="文章列表"] a[class="boxText"] div[class="tit"] p'))):
             title, output = content(soup_main, k)
-            file_save(path, title)
+            file_save(path, title, output)
             time.sleep(1)
