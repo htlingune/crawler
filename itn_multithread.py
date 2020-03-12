@@ -47,7 +47,8 @@ def content(soup, n):
             content_text += j.text
     content_text = content_text.split('\n')[0]
     output = {'date': date, 'title': title, 'content': content_text, 'href': href, 'tag': tag, 'clicks': clicks}
-    time.sleep(3)
+    session.close()
+    time.sleep(4)
     return title, output
 
 
@@ -79,7 +80,7 @@ def mulitcatergory(cat, headers):
             url_indexed_list = 'https://ec.ltn.com.tw/list/%s/' % (cat) + str(i)
             soup = res(url_indexed_list, headers)
             threads = []
-            for t in range(0, 3):
+            for t in range(3):
                 threads.append(threading.Thread(target=get_article_header, args=(soup, t, path)))
                 threads[t].start()
         except:
@@ -87,23 +88,24 @@ def mulitcatergory(cat, headers):
         url_indexed_list = 'https://ec.ltn.com.tw/list/%s/' % (cat) + str(i)
         soup = res(url_indexed_list, headers)
         Q = int(len(soup.select('div[data-desc="文章列表"] a[class="boxText"] div[class="tit"] p')) / 2)
-        R = len(soup.select('div[data-desc="文章列表"] a[class="boxText"] div[class="tit"] p')) % 2
+        R = int(len(soup.select('div[data-desc="文章列表"] a[class="boxText"] div[class="tit"] p')) % 2)
         for i in range(Q):
             threads = []
             for j in range(2):
-                threads.append(threading.Thread(target=get_article, args=(soup, i * 2 + j, path)))
+                threads.append(threading.Thread(target=get_article, args=(soup, (i * 2) + j, path)))
                 threads[j].start()
             for k in threads:
                 k.join()
-            print(f'now in block{i},thread number={j+1},{i*2+1/Q*2}% complete')
+            print(f'now in topic {cat} block{i} total has {Q} blocks, this page has completed {((i*2)+j)/((Q*2)+R)*100}% ')
         threads = []
         for i in range(R):
-            threads.append(threading.Thread(target=get_article, args=(soup, Q * 2 + i, path)))
+            threads.append(threading.Thread(target=get_article, args=(soup, ((Q * 2) + i), path)))
             threads[i].start()
+            print(f'article ={((Q * 2) + i)}')
         for i in threads:
             i.join()
-        print('this page has done')
-    session.close()
+        print('this page has completed')
+
 
 
 headers = {'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.106 Safari/537.36'}
