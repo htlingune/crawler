@@ -4,7 +4,7 @@ crawl the news content from various sites and store as json per news, in which j
 for the details which are not available ,fill the value as 'NA'
 
 daily crawler:
-cnyes_news_hightlight.py, ltn_strategy.py, ltn_securities.py, ltn_investment.py, ltn_weeklybiz_oneweek.py, ltn_RSS.py
+cnyes_news_hightlight.py, ltn_strategy.py, ltn_securities.py, ltn_investment.py, ltn_weeklybiz_oneweek.py, ltn_RSS.py ,daily_multiprocess_que.py
 
 
 the reference site:
@@ -26,5 +26,7 @@ ltn_weeklybiz_history.py and ltn_weeklybiz_oneweek.py: https://ec.ltn.com.tw/lis
 ltn_RSS.py: https://news.ltn.com.tw/rss/business.xml
 
 live_stock_price: https://mis.twse.com.tw/stock/index.jsp
+
+For efficiency daily_multiprocess_que.py, using multithread to crawl the sites which update on daily bases 
 
 one can load the crawled json-file with fileload.py
