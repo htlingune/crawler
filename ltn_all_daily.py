@@ -3,8 +3,8 @@ from bs4 import BeautifulSoup
 import os
 import json
 import re
-from datetime import datetime, timedelta, date
 import time
+import threading
 
 def req(url,headers):
     response = session.get(url, headers=headers)
@@ -13,7 +13,7 @@ def req(url,headers):
 
 def find_final(soup):
     finalpage = soup.select('div[class="pagination boxTitle"]  a[data-desc="最後一頁"]')[0]['href']
-    finalpage_number = int(re.findall('\d+', finalpage)[1])
+    finalpage_number = re.search(r"\d+",finalpage)[0]
     return finalpage_number
 
 def content_header(soup,n):
@@ -47,57 +47,49 @@ def content(soup,n):
     return title, output
 
 def file_save(path, title, output):
-    with open(path % (title) + '.json', 'w', encoding='utf8') as f:
+    with open(path + '/%s' % (title) + '.json', 'w', encoding='utf8') as f:
         json.dump(output, f)
 
-headers={'user-agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.106 Safari/537.36'}
-path =r'./ltn_weeklybiz/%s'
-if not os.path.exists(r'./ltn_weeklybiz'):
-    os.mkdir(r'./ltn_weeklybiz')
-ref_date = datetime(2017, 8, 28)
-today = date.today()
-session = requests.session()
-while int((ref_date + timedelta(days=7)).strftime('%Y%m%d')) <= int(today.strftime('%Y%m%d')):
-    ref_date = ref_date + timedelta(days=7)
-    url_indexed_list = 'https://ec.ltn.com.tw/list/weeklybiz' + '/' + ref_date.strftime('%Y%m%d')
-    finalpage_number = 0
-    try:
-        soup = req(url_indexed_list,headers)
-        finalpage_number = find_final(soup)
-        session.close()
-    except:
-        print('only 1 page')
-        pass
-    if finalpage_number == 0:
+def get_mulitcatergory(cat, headers):
+    print(f'thread:{cat}')
+    path = r'./ltn_%s' % (cat)
+    if not os.path.exists(r'./ltn_%s' %(cat)):
+        os.mkdir(r'./ltn_%s' %(cat))
+    url_list = 'https://ec.ltn.com.tw/list/%s' %(cat)
+    soup_list = req(url_list, headers)
+    finalpage_number = find_final(soup_list)
+    session.close()
+    breaktoken = 0
+    for i in range(1, int(finalpage_number) + 1):
+        if breaktoken != 0:
+            break
         try:
-            soup = req(url_indexed_list,headers)
+            url_indexed_list = 'https://ec.ltn.com.tw/list/%s/' %(cat) + str(i)
+            soup = req(url_indexed_list, headers)
             for t in range(0, 3):
-                title ,output =  content_header(soup, t)
+                title, output = content_header(soup, t)
+                if os.path.exists(path + '/%s' % (title) + '.json'):
+                    break
                 file_save(path, title, output)
         except:
             print('there are no news on the header')
+        url_indexed_list = 'https://ec.ltn.com.tw/list/%s/' %(cat) + str(i)
         soup = req(url_indexed_list, headers)
         for k in range(len(soup.select('div[data-desc="文章列表"] a[class="boxText"] div[class="tit"] p'))):
             title, output = content(soup, k)
+            if os.path.exists(path + '/%s' % (title) + '.json'):
+                breaktoken += 1
+                print('no new news')
+                break
             file_save(path, title, output)
             time.sleep(1)
-    else:
-        try:
-            soup = req(url_indexed_list, headers)
-            for t in range(0, 3):
-                title, output = content_header(soup, t)
-                file_save(path, title, output)
-        except:
-            print('there are no news on the header')
-        soup = req(url_indexed_list, headers)
-        for i in range(1, int(finalpage_number)+1):
-            url_indexed_list = 'https://ec.ltn.com.tw/list/weeklybiz/' + '/'+ref_date.strftime('%Y%m%d') +'/'+ str(i)
-            print('currently in page ' + str(i))
-            soup = req(url_indexed_list, headers)
-            for t in range(0, 3):
-                title, output = content_header(soup, t)
-                file_save(path, title, output)
-            for k in range(len(soup.select('div[data-desc="文章列表"] a[class="boxText"] div[class="tit"] p'))):
-                title, output = content(soup, k)
-                file_save(path, title, output)
-                time.sleep(1)
+    session.close()
+
+
+headers = {'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.106 Safari/537.36'}
+catergory = ['investment', 'securities', 'strategy']
+session = requests.session()
+threads = []
+for n in range(len(catergory)):
+    threads.append(threading.Thread(target=get_mulitcatergory, args=(catergory[n], headers)))
+    threads[n].start()

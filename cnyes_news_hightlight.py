@@ -38,7 +38,7 @@ def text_clean(content):
         content = content.replace('\n', '')
     return content
 
-def file_save(path,title):
+def file_save(path, title, output):
     with open(path % (title) + '.json', 'w', encoding='utf8') as f:
         json.dump(output, f)
 
@@ -55,5 +55,5 @@ for n in range(len(soup.select('a[class="_1Zdp"]'))):
     if os.path.exists(path %(title) + '.json'):
         break
     if not os.path.exists(path %(title)):
-        file_save(path, title)
+        file_save(path, title, output)
 session.close()

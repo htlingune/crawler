@@ -24,7 +24,7 @@ def content(soup,n):
     output = {'date': date, 'title': title, 'content': content_text, 'href': content_url, 'tag': tag, 'clicks': clicks}
     return title, output
 
-def file_save(path,title):
+def file_save(path, title, output):
     with open(path % (title) + '.json', 'w', encoding='utf8') as f:
         json.dump(output, f)
 
@@ -45,6 +45,6 @@ for n in range(len(soup.select('item'))):
     title, output = content(soup, n)
     if os.path.exists(path % (title)+ '.json'):
         break
-    file_save(path, title)
+    file_save(path, title, output)
     time.sleep(3)
 session.close()
